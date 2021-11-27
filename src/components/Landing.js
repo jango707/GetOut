@@ -5,6 +5,7 @@ import Alert from '@mui/material/Alert';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+import BookingLogo from '../pics/booking.png'
 import './Landing.css'
 
 
@@ -41,7 +42,11 @@ function Landing() {
                 </h4>
             </section>
 
+
             <section className="inputs">
+                
+                <img src={BookingLogo} alt="booking-logo" />
+
                 <TextField
                     id="airport num"
                     label="Airpot IATA number"
@@ -62,6 +67,7 @@ function Landing() {
                 </LocalizationProvider>
                 <Button id="btn" variant="contained" onClick={onButton}>Search</Button>
             </section>
+
             {
                 error
                 ?

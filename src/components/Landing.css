@@ -1,11 +1,14 @@
 .landing{
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #e8edf1;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: var(--white);
     height: 100vh;
 }
 .landing .top{
-    background-color: #1976d2ad;
+    background-color: var(--blue);
     padding: 2rem;
+}
+.landing .top{
+    color: var(--white);
 }
 .landing .top h1{
     margin: 0;
@@ -14,10 +17,17 @@
 .landing .inputs {
     padding: 2rem;
 }
+.landing img{
+    width: 50px;
+    margin-right: 200px;
+    margin-left: -200px;
+}
 .landing .inputs #btn{
     margin-left: 5px;
     height: 40px;
-    margin-top: 5px;
+    background-color: var(--yellow);
+    color: var(--dark-grey);
+    margin-top: -40px;
 }
 .landing #alert {
     width: 30%;
