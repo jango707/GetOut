@@ -9,10 +9,10 @@ function Landing() {
 
     const [airportCode, setAirportCode] = React.useState("");
     const [finalCode, setFinalCode] = React.useState("");
-    const [Error, setError] = React.useState("");
+    const [error, setError] = React.useState("");
 
     function onInput(e){
-        setAirportCode(e.target.value)
+        setAirportCode(e.target.value.toUpperCase())
     }
 
     function onButton(){
@@ -48,9 +48,9 @@ function Landing() {
                 <Button id="btn" variant="contained" onClick={onButton}>Search</Button>
             </section>
             {
-                Error
+                error
                 ?
-                <Alert id="alert" variant="outlined" severity="error">Code empty</Alert>
+                <Alert id="alert" variant="outlined" severity="error">{error}</Alert>
                 :
                 ""
             }
@@ -58,7 +58,7 @@ function Landing() {
             {
                 finalCode
                 ?
-                <Result code={finalCode}/>
+                <Result code={finalCode} setError={setError} setFinalCode={setFinalCode}/>
                 :
                 ""
             }
@@ -73,9 +73,47 @@ function Result(props) {
 
     const code = props.code
 
+    const [lat, setLat] = React.useState("");
+    const [long, setLong] = React.useState("");
+
+
+    var axios = require('axios');
+
+    var config = {
+    method: 'get',
+    url: `https://www.air-port-codes.com/api/v1/single?iata=${code}`,
+    headers: { 
+        'APC-Auth': '94fa5a0dc4', 
+        'APC-Auth-Secret': 'ec04d7c618beaf0'
+    }
+    };
+
+    React.useEffect(() => {
+        axios(config)
+            .then(function (response) {
+                if(response.data.airport){
+                    setLat(JSON.stringify(parseFloat(response.data.airport.latitude)));
+                    setLong(JSON.stringify(parseFloat(response.data.airport.longitude)));
+                }else{
+                    props.setFinalCode("")
+                    props.setError("airport code not valid.")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+    
+
     return(
         <div className="results">
             Airport: <b>{code}</b>
+            <p>
+                Lat: {lat}
+            </p>
+            <p>
+                Long: {long}
+            </p>
         </div>
     )
 }

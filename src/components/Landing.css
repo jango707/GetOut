@@ -1,8 +1,10 @@
 .landing{
     font-family: 'Courier New', Courier, monospace;
+    background-color: #e8edf1;
+    height: 100vh;
 }
 .landing .top{
-    background-color: rgb(228, 234, 240);
+    background-color: #1976d2ad;
     padding: 2rem;
 }
 .landing .top h1{
