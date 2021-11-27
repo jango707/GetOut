@@ -85,7 +85,7 @@ function Landing() {
                 ""
             }
 
-            <Breaking />
+            <Breaking dateTime={value} airport={finalCode}/>
 
         </div>
     );

@@ -4,7 +4,7 @@ import FalloutVideo from '../pics/fallout.mp4'
 import './Breaking.css'
 import Fallout from './Fallout';
 
-function Breaking() {
+function Breaking(props) {
 
     const [shake, setShake] = React.useState(false);
     const [isShaking, setIsShaking] = React.useState(true);
@@ -78,7 +78,7 @@ function Breaking() {
             {
                 fallout
                 ?
-                <Fallout />
+                <Fallout dateTime={props.dateTime} airport={props.airport}/>
                 :
                 ""
             }

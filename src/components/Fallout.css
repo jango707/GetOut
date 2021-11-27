@@ -1,9 +1,26 @@
-.fallout h1{
-    margin-top: 100vh;
-    margin-bottom: 100vh;
-}
 .fallout{
+    margin-top: 100vh;
     height: 100vh;
-    background-color: rgb(100, 82, 32);
+    background-color: rgb(97, 82, 40);
     color: burlywood;
+}
+.fallout h1{
+    padding-top: 20px;
+    color: rgb(49, 28, 2);
+}
+.fallout img{
+    width: 70%;
+    margin: 0;
+    border-radius: 10px;
+}
+.fallout #amazon{
+    margin-top: 30px;
+    padding: 100px;
+    background-color:  rgb(54, 43, 13);
+}
+.fallout #amazon p{
+    margin-top: -30px;
+    text-align: left;
+    color: rgb(226, 222, 212);
+    font-size: 20px;
 }
