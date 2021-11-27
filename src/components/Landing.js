@@ -2,6 +2,9 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 import './Landing.css'
 
 
@@ -10,6 +13,7 @@ function Landing() {
     const [airportCode, setAirportCode] = React.useState("");
     const [finalCode, setFinalCode] = React.useState("");
     const [error, setError] = React.useState("");
+    const [value, setValue] = React.useState(new Date());
 
     function onInput(e){
         setAirportCode(e.target.value.toUpperCase())
@@ -45,6 +49,17 @@ function Landing() {
                     defaultValue=""
                     onChange={onInput}
                 />
+
+                <LocalizationProvider  dateAdapter={AdapterDateFns}>
+                    <DateTimePicker 
+                        renderInput={(props) => <TextField style={{marginLeft:'5px'}} {...props} />}
+                        label="DateTimePicker"
+                        value={value}
+                        onChange={(newValue) => {
+                            setValue(newValue);
+                        }}
+                    />
+                </LocalizationProvider>
                 <Button id="btn" variant="contained" onClick={onButton}>Search</Button>
             </section>
             {
@@ -58,7 +73,7 @@ function Landing() {
             {
                 finalCode
                 ?
-                <Result code={finalCode} setError={setError} setFinalCode={setFinalCode}/>
+                <Result code={finalCode} setError={setError} setFinalCode={setFinalCode} dateTime={value}/>
                 :
                 ""
             }
@@ -72,6 +87,9 @@ export default Landing;
 function Result(props) {
 
     const code = props.code
+    const dateTime = props.dateTime
+
+    console.log(dateTime)
 
     const [lat, setLat] = React.useState("");
     const [long, setLong] = React.useState("");
@@ -113,6 +131,22 @@ function Result(props) {
             </p>
             <p>
                 Long: {long}
+            </p>
+
+            <p>
+                Day: {dateTime.getDay()}
+            </p>
+            <p>
+                Date: {dateTime.getDate()}
+            </p>
+            <p>
+                Month: {dateTime.getMonth()}
+            </p>
+            <p>
+                Year: {dateTime.getFullYear()}
+            </p>
+            <p>
+                Hour: {dateTime.getHours()}
             </p>
         </div>
     )
