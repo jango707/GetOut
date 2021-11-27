@@ -1,5 +1,4 @@
 import React from 'react';
-import  { Grid } from '@material-ui/core';
 import './Fallout.css';
 import amazon from '../pics/amazon1.png'
 import { InfinityStaged } from 'react-staged';
