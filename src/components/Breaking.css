@@ -1,0 +1,12 @@
+.breaking video{
+    position:absolute;
+    top:50%;
+    left:50%;
+    background-color:transparent;
+    z-index:100;
+    overflow:auto;
+    width:650px;
+    height:360px;
+    margin-left:-300px;
+    margin-top:-200px;
+}

@@ -7,6 +7,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import BookingLogo from '../pics/booking.png'
 import './Landing.css'
+import Breaking from './Breaking';
 
 
 function Landing() {
@@ -83,6 +84,8 @@ function Landing() {
                 :
                 ""
             }
+
+            <Breaking />
 
         </div>
     );
