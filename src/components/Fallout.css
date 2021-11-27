@@ -1,0 +1,9 @@
+.fallout h1{
+    margin-top: 100vh;
+    margin-bottom: 100vh;
+}
+.fallout{
+    height: 100vh;
+    background-color: rgb(100, 82, 32);
+    color: burlywood;
+}

@@ -17,7 +17,7 @@ function Breaking() {
         startFallout()
         setTimeout(function () {
             endFallout()
-         }, 3000);
+         }, 10000);
     }
 
     function endFallout(){
