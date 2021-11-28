@@ -102,6 +102,7 @@ function Result(props) {
 
     const [lat, setLat] = React.useState("");
     const [long, setLong] = React.useState("");
+    const [res, setRes] = React.useState("");
 
 
     var axios = require('axios');
@@ -121,6 +122,7 @@ function Result(props) {
                 if(response.data.airport){
                     setLat(JSON.stringify(parseFloat(response.data.airport.latitude)));
                     setLong(JSON.stringify(parseFloat(response.data.airport.longitude)));
+                    callBackend()
                 }else{
                     props.setFinalCode("")
                     props.setError("airport code not valid.")
@@ -130,33 +132,60 @@ function Result(props) {
                 console.log(error);
             });
     });
+
+    function callBackend(){
+        var data = JSON.stringify({"dest_lat":40.369801,"dest_long":-73.7789,"day_week":3,"day_month":6,"month":2,"year":2019,"hour":1});
+
+        var configAPI = {
+            method: 'post',
+            url: 'https://get-the-f-out.ew.r.appspot.com/security',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+        };
+
+        axios(configAPI)
+        .then(function (response) {
+            setRes(JSON.stringify(response.data.time));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+    }
     
-
-    return(
-        <div className="results">
-            Airport: <b>{code}</b>
-            <p>
-                Lat: {lat}
-            </p>
-            <p>
-                Long: {long}
-            </p>
-
-            <p>
-                Day: {dateTime.getDay()}
-            </p>
-            <p>
-                Date: {dateTime.getDate()}
-            </p>
-            <p>
-                Month: {dateTime.getMonth()}
-            </p>
-            <p>
-                Year: {dateTime.getFullYear()}
-            </p>
-            <p>
-                Hour: {dateTime.getHours()}
-            </p>
-        </div>
-    )
+    if (!res){
+        return("Loading...")
+    }else{
+        return(
+            <div className="results">
+                Airport: <b>{code}</b>
+                <p>
+                    Lat: {lat}
+                </p>
+                <p>
+                    Long: {long}
+                </p>
+                <p>
+                    RES: {res}
+                </p>
+                <p>
+                    Day: {dateTime.getDay()}
+                </p>
+                <p>
+                    Date: {dateTime.getDate()}
+                </p>
+                <p>
+                    Month: {dateTime.getMonth()}
+                </p>
+                <p>
+                    Year: {dateTime.getFullYear()}
+                </p>
+                <p>
+                    Hour: {dateTime.getHours()}
+                </p>
+            </div>
+        )
+    }
 }
