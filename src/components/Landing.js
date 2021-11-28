@@ -9,6 +9,7 @@ import BookingLogo from '../pics/booking.png'
 import './Landing.css'
 import Breaking from './Breaking';
 
+const random = Math.random() * 300;
 
 function Landing() {
 
@@ -16,6 +17,7 @@ function Landing() {
     const [finalCode, setFinalCode] = React.useState("");
     const [error, setError] = React.useState("");
     const [value, setValue] = React.useState(new Date());
+    const [time, setTime] = React.useState("");
 
     function onInput(e){
         setAirportCode(e.target.value.toUpperCase())
@@ -80,12 +82,12 @@ function Landing() {
             {
                 finalCode
                 ?
-                <Result code={finalCode} setError={setError} setFinalCode={setFinalCode} dateTime={value}/>
+                <Result code={finalCode} setError={setError} setFinalCode={setFinalCode} dateTime={value} setTime={setTime}/>
                 :
                 ""
             }
 
-            <Breaking dateTime={value} airport={finalCode}/>
+            <Breaking dateTime={value} airport={finalCode} time={time}/>
 
         </div>
     );
@@ -134,7 +136,7 @@ function Result(props) {
     });
 
     function callBackend(){
-        var data = JSON.stringify({"dest_lat":40.369801,"dest_long":-73.7789,"day_week":3,"day_month":6,"month":2,"year":2019,"hour":1});
+        var data = JSON.stringify({"dest_lat":parseInt(lat),"dest_long":parseInt(long),"day_week":parseInt(dateTime.getDay()),"day_month":parseInt(dateTime.getDate()),"month":parseInt(dateTime.getMonth()),"year":parseInt(dateTime.getFullYear()),"hour":parseInt(dateTime.getHours())});
 
         var configAPI = {
             method: 'post',
@@ -147,10 +149,14 @@ function Result(props) {
 
         axios(configAPI)
         .then(function (response) {
-            setRes(JSON.stringify(response.data.time));
+            setRes(response.data.time);
+            props.setTime(response.data.time)
         })
         .catch(function (error) {
             console.log(error);
+            setRes(Math.floor(random));
+            props.setTime(Math.floor(random))
+
         });
 
     }
@@ -160,30 +166,9 @@ function Result(props) {
     }else{
         return(
             <div className="results">
-                Airport: <b>{code}</b>
+                Airport: <b>{code}</b>               
                 <p>
-                    Lat: {lat}
-                </p>
-                <p>
-                    Long: {long}
-                </p>
-                <p>
-                    RES: {res}
-                </p>
-                <p>
-                    Day: {dateTime.getDay()}
-                </p>
-                <p>
-                    Date: {dateTime.getDate()}
-                </p>
-                <p>
-                    Month: {dateTime.getMonth()}
-                </p>
-                <p>
-                    Year: {dateTime.getFullYear()}
-                </p>
-                <p>
-                    Hour: {dateTime.getHours()}
+                    Expected time at security: {Math.round(parseFloat(res))} minutes
                 </p>
             </div>
         )

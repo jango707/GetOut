@@ -10,7 +10,16 @@ function Breaking(props) {
     const [isShaking, setIsShaking] = React.useState(true);
 
     const [fallout, setFallout] = React.useState(false);
+    const [hasStarted, setStarted] = React.useState(false);
 
+    React.useEffect(() => {
+        if(!hasStarted){
+            setTimeout(function () {
+                onStart()
+                setStarted(true)
+            }, 10000);
+        }
+    })
     
     function onStart(){
         setShake(true)
@@ -42,14 +51,6 @@ function Breaking(props) {
 
     return (
         <div className="breaking">
-            {!fallout
-            ?
-                <button onClick={onStart}>
-                    Breaking News
-                </button>
-            :
-                ""
-            }
             {
                 shake
                 ?
@@ -78,7 +79,7 @@ function Breaking(props) {
             {
                 fallout
                 ?
-                <Fallout dateTime={props.dateTime} airport={props.airport}/>
+                <Fallout dateTime={props.dateTime} airport={props.airport} time={props.time}/>
                 :
                 ""
             }

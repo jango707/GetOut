@@ -1,12 +1,17 @@
 .fallout{
     margin-top: 100vh;
-    height: 100vh;
+    height: 200vh;
     background-color: rgb(97, 82, 40);
     color: burlywood;
 }
 .fallout h1{
-    padding-top: 20px;
-    color: rgb(49, 28, 2);
+    padding: 20px;
+    padding-top: 50px;
+    font-size: 5rem;
+    color: rgb(49, 2, 2);
+}
+.fallout p{
+    font-size: 20px;
 }
 .fallout img{
     width: 70%;

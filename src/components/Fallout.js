@@ -71,6 +71,9 @@ function Fallout(props) {
         if (country === "United Kingdom"){
             country = "ireland"
         }
+        if (country === "United States"){
+            country = "canada"
+        }
         var dataCities = JSON.stringify({"limit":200,"order":"asc","orderBy":"population","country":country});
 
         var configCities = {
@@ -107,11 +110,16 @@ function Fallout(props) {
                 National State of Nuclear Fallout
             </h1>
 
-            For your arrival the {props.dateTime.getDate()}th in {city}. Please follow these rules:
+            <h2>
+                You have <b style={{color:'#310202'}}>{parseInt(props.time)}</b> minutes to get to your rental car!
+            </h2>
 
-            <li>Run Away!</li>
-            <li>Seek Shelter</li>
-            <li>Defend yourself</li>
+            <p>For your arrival the {props.dateTime.getDate()}th in {city}. Please follow these rules:
+
+                <li>Run Away!</li>
+                <li>Seek Shelter</li>
+                <li>Defend yourself</li>
+            </p>
 
             <div id="amazon">
                 <p>We recommend these rural places close to {city} to escape:</p>
