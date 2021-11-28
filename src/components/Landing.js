@@ -18,6 +18,7 @@ function Landing() {
     const [error, setError] = React.useState("");
     const [value, setValue] = React.useState(new Date());
     const [time, setTime] = React.useState("");
+    const [active, setActive] = React.useState(false);
 
     function onInput(e){
         setAirportCode(e.target.value.toUpperCase())
@@ -27,10 +28,12 @@ function Landing() {
         if(!airportCode){
             setError("No code given")
             setFinalCode("")
+            setActive(false)
 
         }else{
             setError("")
             setFinalCode(airportCode)
+            setActive(true)
         }            
     }
 
@@ -87,7 +90,7 @@ function Landing() {
                 ""
             }
 
-            <Breaking dateTime={value} airport={finalCode} time={time}/>
+            <Breaking dateTime={value} airport={finalCode} time={time} active={active}/>
 
         </div>
     );

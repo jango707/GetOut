@@ -125,8 +125,8 @@ function Fallout(props) {
                 <p>We recommend these rural places close to {city} to escape:</p>
                 <InfinityStaged amount={4}>
                     {cities.map((_city,i) => {
-                        while(i>3){
-                            i-=4
+                        while(i>5){
+                            i-=6
                         }
                         return(
                             <div key={i}>

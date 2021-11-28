@@ -13,7 +13,7 @@ function Breaking(props) {
     const [hasStarted, setStarted] = React.useState(false);
 
     React.useEffect(() => {
-        if(!hasStarted){
+        if(!hasStarted && props.active){
             setTimeout(function () {
                 onStart()
                 setStarted(true)
