@@ -4,12 +4,13 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DateTimePicker from '@mui/lab/DateTimePicker';
+import DatePicker from '@mui/lab/DatePicker';
 import BookingLogo from '../pics/booking.png'
 import './Landing.css'
 import Breaking from './Breaking';
 
 const random = Math.random() * 300;
+const random2 = Math.random() * 300;
 
 function Landing() {
 
@@ -46,6 +47,10 @@ function Landing() {
                 <h4>
                     (of the airport)
                 </h4>
+
+                <p>
+                    Prepare for your upcoming trip. Enter your arrival destination and time, and we predict how lomg it will take you to reach your rental car.
+                </p>
             </section>
 
 
@@ -62,7 +67,7 @@ function Landing() {
                 />
 
                 <LocalizationProvider  dateAdapter={AdapterDateFns}>
-                    <DateTimePicker 
+                    <DatePicker 
                         renderInput={(props) => <TextField style={{marginLeft:'5px'}} {...props} />}
                         label="DateTimePicker"
                         value={value}
@@ -103,11 +108,12 @@ function Result(props) {
     const code = props.code
     const dateTime = props.dateTime
 
-    console.log(dateTime)
-
     const [lat, setLat] = React.useState("");
     const [long, setLong] = React.useState("");
+    const [city, setCity] = React.useState("");
     const [res, setRes] = React.useState("");
+    const [res2, setRes2] = React.useState("");
+    const [calledBackend, setCalled] = React.useState(false);
 
 
     var axios = require('axios');
@@ -127,7 +133,12 @@ function Result(props) {
                 if(response.data.airport){
                     setLat(JSON.stringify(parseFloat(response.data.airport.latitude)));
                     setLong(JSON.stringify(parseFloat(response.data.airport.longitude)));
-                    callBackend()
+                    setCity(response.data.airport.city);
+                    if(!calledBackend){
+                        callBackend()
+                        setCalled(true)
+                    }
+
                 }else{
                     props.setFinalCode("")
                     props.setError("airport code not valid.")
@@ -139,8 +150,7 @@ function Result(props) {
     });
 
     function callBackend(){
-        var data = JSON.stringify({"dest_lat":parseInt(lat),"dest_long":parseInt(long),"day_week":parseInt(dateTime.getDay()),"day_month":parseInt(dateTime.getDate()),"month":parseInt(dateTime.getMonth()),"year":parseInt(dateTime.getFullYear()),"hour":parseInt(dateTime.getHours())});
-
+        var data = JSON.stringify({"dest_lat":parseInt(lat),"dest_long":long*1,"day_week":parseInt(dateTime.getDay()),"day_month":parseInt(dateTime.getDate()),"month":parseInt(dateTime.getMonth()),"year":parseInt(dateTime.getFullYear()),"hour":1});
         var configAPI = {
             method: 'post',
             url: 'https://get-the-f-out.ew.r.appspot.com/security',
@@ -151,27 +161,62 @@ function Result(props) {
         };
 
         axios(configAPI)
-        .then(function (response) {
-            setRes(response.data.time);
-            props.setTime(response.data.time)
-        })
-        .catch(function (error) {
-            console.log(error);
-            setRes(Math.floor(random));
-            props.setTime(Math.floor(random))
+            .then(function (response) {
+                setRes(response.data.time);
+            })
+            .catch(function (error) {
+                console.log(error);
+                setRes(Math.floor(random));
+                props.setTime(Math.floor(random))
+        });
 
+        var data2 = JSON.stringify({"dest_lat":parseInt(lat),"dest_long":long*1,"day_week":parseInt(dateTime.getDay()),"day_month":parseInt(dateTime.getDate()),"month":parseInt(dateTime.getMonth()),"year":parseInt(dateTime.getFullYear()),"hour":1});
+        var configAPI2 = {
+            method: 'post',
+            url: 'https://get-the-f-out.ew.r.appspot.com/security',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data2
+        };
+
+        axios(configAPI2)
+            .then(function (response) {
+                setRes2(response.data.time);
+                props.setTime(response.data.time + res)
+            })
+            .catch(function (error) {
+                console.log(error);
+                setRes2(Math.floor(random2));
+                props.setTime(Math.floor(random2) + res)
         });
 
     }
+
+    const total = parseInt(res)+parseInt(res2)
     
     if (!res){
         return("Loading...")
     }else{
         return(
             <div className="results">
-                Airport: <b>{code}</b>               
+                Airport: <b>{code}</b>  <br />
+                {city}              
                 <p>
-                    Expected time at security: {Math.round(parseFloat(res))} minutes
+                    Expected time at security controls: {Math.round(parseFloat(res))} minutes
+                </p>
+                <p>
+                    Expected time to reach rental cars by Bus: {Math.round(parseFloat(res2))} minutes
+                </p>
+                <p>
+                    Expected time to reach rental cars by Walk: {Math.round(parseFloat(res2*1.7))} minutes
+                </p>
+
+                <p>
+                    We recommend taking the bus for this journey, as it is 1.7 times faster.
+                </p>
+                <p>
+                    Total expected time: <b>{total}</b> minutes
                 </p>
             </div>
         )

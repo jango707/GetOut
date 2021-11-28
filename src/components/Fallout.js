@@ -110,6 +110,13 @@ function Fallout(props) {
                 National State of Nuclear Fallout
             </h1>
 
+            <p>
+                Nuclear missiles are heading towards {city}! Get to your car as fast as you can!
+            </p> 
+            <p>
+                ..and GET OUT!
+            </p> 
+
             <h2>
                 You have <b style={{color:'#310202'}}>{parseInt(props.time)}</b> minutes to get to your rental car!
             </h2>
@@ -117,12 +124,12 @@ function Fallout(props) {
             <p>For your arrival the {props.dateTime.getDate()}th in {city}. Please follow these rules:
 
                 <li>Run Away!</li>
-                <li>Seek Shelter</li>
-                <li>Defend yourself</li>
+                <li>Seek Shelter!</li>
+                <li>Defend yourself!</li>
             </p>
 
             <div id="amazon">
-                <p>We recommend these rural places close to {city} to escape:</p>
+                <p>We recommend these places close to {city} to escape:</p>
                 <InfinityStaged amount={4}>
                     {cities.map((_city,i) => {
                         while(i>5){
